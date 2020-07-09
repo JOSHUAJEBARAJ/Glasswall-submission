@@ -1,6 +1,7 @@
 # Glaswall-Submission
 
 ![badge-1](https://img.shields.io/github/license/JOSHUAJEBARAJ/Glasswall-submission)
+[![Build Status](https://travis-ci.com/JOSHUAJEBARAJ/Glasswall-submission.svg?branch=master)](https://travis-ci.com/JOSHUAJEBARAJ/Glasswall-submission)
 
 This was Created as the part of the **GlassWall** Internship Challenge
 
