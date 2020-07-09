@@ -21,3 +21,8 @@ Create the Wardley Map
 [Map-Link](https://onlinewardleymaps.com/#nE8iVEDeyLJOSRL52I)
 
 [Explanation](https://github.com/JOSHUAJEBARAJ/Glasswall-submission/blob/master/Task-3.md)
+
+## Bonus Task
+
+- [x] Released Under `Creative Commons licence`
+- [x] Integrated with Travis CI
