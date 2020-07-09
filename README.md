@@ -15,5 +15,5 @@ Create the PPT about yourself
 Create the Wardley Map
 
 [Map-Link](https://onlinewardleymaps.com/#nE8iVEDeyLJOSRL52I)
-[Map-picture]()
-[Explanation]()
+
+[Explanation](https://github.com/JOSHUAJEBARAJ/Glasswall-submission/blob/master/Task-3.md)
