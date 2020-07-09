@@ -1,5 +1,6 @@
-# Glaswall-submission
+# Glaswall-Submission
 
+![badge-1](https://img.shields.io/github/license/JOSHUAJEBARAJ/Glasswall-submission)
 
 This was Created as the part of the [GlassWall](https://glasswallsolutions.com/) Internship Challenge
 
