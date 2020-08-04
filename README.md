@@ -33,7 +33,7 @@ Create the Attack Tree
 
 ## Task - 5 and Task - 6
 
-Identify the threats using `STRIDE` method  and map it with the `DFD` diagram
+Identify the threats using `STRIDE` method  and find its mitigation and map it with the `DFD` diagram
 
 For this task I have used `OWASP threat Dragon`
 
