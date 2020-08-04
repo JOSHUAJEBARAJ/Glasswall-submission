@@ -1,0 +1,1069 @@
+{
+  "summary": {
+    "title": "Food Order Application Threat Model",
+    "owner": "Joshua",
+    "description": "This is the threat model created for the food ordering application with the Following Scenarios\n- Login Functionality\n- Payment Functioanality\n- Search For Food\n- Pro User"
+  },
+  "detail": {
+    "contributors": [],
+    "diagrams": [
+      {
+        "title": "Login",
+        "thumbnail": "./public/content/images/thumbnail.jpg",
+        "id": 0,
+        "$$hashKey": "object:33",
+        "diagramJson": {
+          "cells": [
+            {
+              "type": "tm.Actor",
+              "size": {
+                "width": 160,
+                "height": 80
+              },
+              "position": {
+                "x": 50,
+                "y": 50
+              },
+              "angle": 0,
+              "id": "c028911a-4fa7-440c-a48b-aaf8d15ea02b",
+              "z": 1,
+              "hasOpenThreats": true,
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "Spoofing as admin",
+                  "type": "Spoofing",
+                  "description": "Some times the Attacker may try to login using the Leaked admin credential",
+                  "mitigation": "Add multifactor Authentication",
+                  "$$hashKey": "object:596"
+                }
+              ],
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "User"
+                },
+                ".element-text": {
+                  "class": "element-text hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 100,
+                "height": 100
+              },
+              "position": {
+                "x": 350,
+                "y": 31
+              },
+              "angle": 0,
+              "id": "b3fa665a-4159-43d2-af2f-3d1ced93c4de",
+              "z": 2,
+              "hasOpenThreats": true,
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Repudiation",
+                  "title": "No Logs for Login",
+                  "description": "The Login Function has no attribute to store the logs this leaves no trace when the attacker try to use the User account and make some changes",
+                  "mitigation": "There should be the Log mechanism added to the Login Functionality",
+                  "$$hashKey": "object:583"
+                }
+              ],
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Login Function"
+                },
+                ".element-text": {
+                  "class": "element-text hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Store",
+              "size": {
+                "width": 160,
+                "height": 80
+              },
+              "position": {
+                "x": 357,
+                "y": 299
+              },
+              "angle": 0,
+              "id": "7abb18bd-f3c7-4f82-9f0f-53d2c4b3a81b",
+              "z": 3,
+              "hasOpenThreats": true,
+              "storesCredentials": true,
+              "isEncrypted": false,
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "title": "Information Leakage",
+                  "description": "The Information stored in the user credential DB leaked using the SQL injection in the Login Page",
+                  "mitigation": "Use paramterized query to remediate the Issue",
+                  "$$hashKey": "object:577"
+                }
+              ],
+              "isSigned": false,
+              "description": "Database that Stores the User credential",
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "User Database"
+                },
+                ".element-text": {
+                  "class": "element-text hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "c028911a-4fa7-440c-a48b-aaf8d15ea02b"
+              },
+              "target": {
+                "id": "b3fa665a-4159-43d2-af2f-3d1ced93c4de"
+              },
+              "vertices": [
+                {
+                  "x": 278,
+                  "y": 48
+                },
+                {
+                  "x": 317,
+                  "y": 52
+                }
+              ],
+              "id": "a344919e-d499-45d0-9913-3424d3151296",
+              "labels": [
+                {
+                  "position": {
+                    "distance": 0.5060289262655526,
+                    "offset": -46.85362937034362
+                  },
+                  "attrs": {
+                    "text": {
+                      "text": "User Name and\nPassword",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 4,
+              "hasOpenThreats": true,
+              "isEncrypted": true,
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "title": "Man In the Middle Attack",
+                  "description": "The attacker may perform man In the Middle attack and retrives the User credentials",
+                  "mitigation": "Use Safe tranmission mechanism like HTTPS to tranfer the information",
+                  "$$hashKey": "object:1579"
+                },
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "Too much Login Attempt",
+                  "type": "Denial of service",
+                  "description": "The attacker may perform Too much login attempt and makes the server down",
+                  "mitigation": "Load balancer should be Used in front of the Server",
+                  "$$hashKey": "object:1585"
+                },
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "Account Takeveover using Bruteforcing",
+                  "type": "Elevation of privilege",
+                  "description": "The attacker may perfrom bruteforcing on the user account to guess the password",
+                  "mitigation": "Rate Limiting Should be implemeneted at the Login Page",
+                  "$$hashKey": "object:1591"
+                }
+              ],
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "b3fa665a-4159-43d2-af2f-3d1ced93c4de"
+              },
+              "target": {
+                "id": "7abb18bd-f3c7-4f82-9f0f-53d2c4b3a81b"
+              },
+              "vertices": [
+                {
+                  "x": 466,
+                  "y": 217
+                }
+              ],
+              "id": "3bcfcd48-dc05-429c-b447-2f09659ee806",
+              "labels": [
+                {
+                  "position": {
+                    "distance": 0.49798682719554743,
+                    "offset": -44.47556828770545
+                  },
+                  "attrs": {
+                    "text": {
+                      "text": "Authorisation",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 5,
+              "hasOpenThreats": false,
+              "description": "Check for",
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "7abb18bd-f3c7-4f82-9f0f-53d2c4b3a81b"
+              },
+              "target": {
+                "id": "b3fa665a-4159-43d2-af2f-3d1ced93c4de"
+              },
+              "vertices": [
+                {
+                  "x": 360,
+                  "y": 223
+                }
+              ],
+              "id": "44d62265-9d57-487d-981c-448caa7b2803",
+              "labels": [
+                {
+                  "position": {
+                    "distance": 0.568392370227115,
+                    "offset": -38.012155750318314
+                  },
+                  "attrs": {
+                    "text": {
+                      "text": "Return Value",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 6,
+              "hasOpenThreats": false,
+              "description": "The flow will return whether the user is registered or new user based on the result",
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "b3fa665a-4159-43d2-af2f-3d1ced93c4de"
+              },
+              "target": {
+                "id": "c028911a-4fa7-440c-a48b-aaf8d15ea02b"
+              },
+              "vertices": [
+                {
+                  "x": 293,
+                  "y": 121
+                },
+                {
+                  "x": 265,
+                  "y": 119
+                }
+              ],
+              "id": "8f6b4c39-9b00-43dd-83e8-f9198ab7a6cc",
+              "labels": [
+                {
+                  "position": {
+                    "distance": 0.5323408517026996,
+                    "offset": -35.82369465453191
+                  },
+                  "attrs": {
+                    "text": {
+                      "text": "Login Or Sign up Page",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 7,
+              "hasOpenThreats": false,
+              "description": "Based on the result It shows Login or Sign Up Page",
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            }
+          ]
+        },
+        "size": {
+          "height": 590,
+          "width": 790
+        }
+      },
+      {
+        "title": "Payment",
+        "thumbnail": "./public/content/images/thumbnail.jpg",
+        "id": 1,
+        "$$hashKey": "object:787",
+        "diagramJson": {
+          "cells": [
+            {
+              "type": "tm.Actor",
+              "size": {
+                "width": 160,
+                "height": 80
+              },
+              "position": {
+                "x": 12,
+                "y": 55
+              },
+              "angle": 0,
+              "id": "bf712927-903d-4c5a-b99f-3bccd6f7af40",
+              "z": 1,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "User"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 100,
+                "height": 100
+              },
+              "position": {
+                "x": 295,
+                "y": 29
+              },
+              "angle": 0,
+              "id": "28c60321-9287-49a9-b404-2d0b51e9e73a",
+              "z": 2,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Payement\nMethod"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Actor",
+              "size": {
+                "width": 160,
+                "height": 80
+              },
+              "position": {
+                "x": 570,
+                "y": 44
+              },
+              "angle": 0,
+              "id": "e3ff2978-452b-4530-b3a1-fb25920962a2",
+              "z": 3,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Third Party Payement\nVendor"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "bf712927-903d-4c5a-b99f-3bccd6f7af40"
+              },
+              "target": {
+                "id": "28c60321-9287-49a9-b404-2d0b51e9e73a"
+              },
+              "vertices": [
+                {
+                  "x": 265,
+                  "y": 83
+                }
+              ],
+              "id": "6c94844e-069c-4197-b076-d0bc31200e31",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "Payement Detail",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 4,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "28c60321-9287-49a9-b404-2d0b51e9e73a"
+              },
+              "target": {
+                "id": "e3ff2978-452b-4530-b3a1-fb25920962a2"
+              },
+              "vertices": [
+                {
+                  "x": 543,
+                  "y": 86
+                }
+              ],
+              "id": "173c27af-a379-41fb-8dfa-168b543d147d",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "Food Details and\npayement Details",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 5,
+              "hasOpenThreats": true,
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "Price Changing",
+                  "type": "Tampering",
+                  "description": "The attacker may tamper the  price of the food using the proxy like burp and zap",
+                  "mitigation": "The server should validate the integrity of the request by Digital Signature and Hashes",
+                  "$$hashKey": "object:889"
+                }
+              ],
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Boundary",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "x": 509,
+                "y": 4
+              },
+              "target": {
+                "x": 486,
+                "y": 225
+              },
+              "vertices": [],
+              "id": "d860a826-5066-4c87-a127-9267d9a63ebb",
+              "z": 6,
+              "labels": [
+                {
+                  "position": {
+                    "distance": 0.7046566572663727,
+                    "offset": 48.01883558704814
+                  },
+                  "attrs": {
+                    "text": {
+                      "text": "Trust Boundary",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "attrs": {}
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "28c60321-9287-49a9-b404-2d0b51e9e73a"
+              },
+              "target": {
+                "id": "bf712927-903d-4c5a-b99f-3bccd6f7af40"
+              },
+              "vertices": [
+                {
+                  "x": 233,
+                  "y": 135
+                }
+              ],
+              "id": "0b6e02e0-2d4e-41bb-b6c5-31c2ca9a8df8",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "Order Confirmation",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 7,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            }
+          ]
+        },
+        "size": {
+          "height": 590,
+          "width": 790
+        }
+      },
+      {
+        "title": "Search For Food",
+        "thumbnail": "./public/content/images/thumbnail.jpg",
+        "id": 2,
+        "$$hashKey": "object:964",
+        "diagramJson": {
+          "cells": [
+            {
+              "type": "tm.Actor",
+              "size": {
+                "width": 160,
+                "height": 80
+              },
+              "position": {
+                "x": 50,
+                "y": 50
+              },
+              "angle": 0,
+              "id": "5c02792b-88fe-45b7-b432-fad8a888160e",
+              "z": 1,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "User"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 100,
+                "height": 100
+              },
+              "position": {
+                "x": 367,
+                "y": 37
+              },
+              "angle": 0,
+              "id": "dc304244-2782-45e1-b334-4cfb7fab7847",
+              "z": 2,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Search\nFunctionality"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Store",
+              "size": {
+                "width": 160,
+                "height": 80
+              },
+              "position": {
+                "x": 326,
+                "y": 278
+              },
+              "angle": 0,
+              "id": "89662926-a149-40a3-afdb-3af501dc307b",
+              "z": 3,
+              "hasOpenThreats": true,
+              "description": "This Database consist to hotel and their menu items",
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Spoofing",
+                  "title": "Create the Hotels with Similar Same",
+                  "description": "Sometimes the attackers may create the Similar hotels name to Scam the People",
+                  "mitigation": "Only Verified owners or authorised person should only allowed to make the Change",
+                  "$$hashKey": "object:1064"
+                }
+              ],
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Hotel Database"
+                },
+                ".element-text": {
+                  "class": "element-text hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "5c02792b-88fe-45b7-b432-fad8a888160e"
+              },
+              "target": {
+                "id": "dc304244-2782-45e1-b334-4cfb7fab7847"
+              },
+              "vertices": [
+                {
+                  "x": 293,
+                  "y": 51
+                }
+              ],
+              "id": "15965091-d2e4-4da2-89c9-7fd877af8dac",
+              "labels": [
+                {
+                  "position": {
+                    "distance": 0.5297690558495571,
+                    "offset": -16.55112190213766
+                  },
+                  "attrs": {
+                    "text": {
+                      "text": "Hotel Name or Food\nName",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 4,
+              "hasOpenThreats": false,
+              "description": "Search for Hotel or foods based on the User query",
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "dc304244-2782-45e1-b334-4cfb7fab7847"
+              },
+              "target": {
+                "id": "5c02792b-88fe-45b7-b432-fad8a888160e"
+              },
+              "vertices": [
+                {
+                  "x": 293,
+                  "y": 148
+                },
+                {
+                  "x": 262,
+                  "y": 143
+                },
+                {
+                  "x": 244,
+                  "y": 134
+                }
+              ],
+              "id": "1f8126a9-9b29-4361-8433-38767dc94075",
+              "labels": [
+                {
+                  "position": {
+                    "distance": 0.5325324489009781,
+                    "offset": -30.38866680413401
+                  },
+                  "attrs": {
+                    "text": {
+                      "text": "Hotel Details",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 5,
+              "hasOpenThreats": true,
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "title": "Tampering the result With the False Result",
+                  "description": "The attacker may result tamper the result and show the food with more price or poor food with the good reviews",
+                  "mitigation": "Validating the response message Integrity using the Digital Signature and Hashing",
+                  "$$hashKey": "object:1077"
+                }
+              ],
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "dc304244-2782-45e1-b334-4cfb7fab7847"
+              },
+              "target": {
+                "id": "89662926-a149-40a3-afdb-3af501dc307b"
+              },
+              "vertices": [
+                {
+                  "x": 470,
+                  "y": 199
+                }
+              ],
+              "id": "fdbbc56b-8c44-4cd1-9082-74c2d9386f30",
+              "labels": [
+                {
+                  "position": {
+                    "distance": 0.5000858698311318,
+                    "offset": -62.01604127393406
+                  },
+                  "attrs": {
+                    "text": {
+                      "text": "Searching based on\nUser query",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 6,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "89662926-a149-40a3-afdb-3af501dc307b"
+              },
+              "target": {
+                "id": "dc304244-2782-45e1-b334-4cfb7fab7847"
+              },
+              "vertices": [
+                {
+                  "x": 353,
+                  "y": 210
+                },
+                {
+                  "x": 354,
+                  "y": 186
+                }
+              ],
+              "id": "4db2094b-f25c-4795-b5b3-5e7f742897aa",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "Returning the Result",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 7,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            }
+          ]
+        },
+        "size": {
+          "height": 590,
+          "width": 790
+        }
+      },
+      {
+        "title": "Premium-User",
+        "thumbnail": "./public/content/images/thumbnail.jpg",
+        "id": 3,
+        "$$hashKey": "object:1152",
+        "diagramJson": {
+          "cells": [
+            {
+              "type": "tm.Actor",
+              "size": {
+                "width": 160,
+                "height": 80
+              },
+              "position": {
+                "x": 12,
+                "y": 46
+              },
+              "angle": 0,
+              "id": "c9838c17-b4d4-4160-84bf-f6216dec6d14",
+              "z": 1,
+              "hasOpenThreats": true,
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Elevation of privilege",
+                  "title": "Premium User Privilage Escalation",
+                  "description": "The normal user may able to view the offers and  discounts that should be only accesible to the premium paid User",
+                  "mitigation": "Use Strong User Authentication mechnism",
+                  "$$hashKey": "object:1212"
+                }
+              ],
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Premium User"
+                },
+                ".element-text": {
+                  "class": "element-text hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Store",
+              "size": {
+                "width": 160,
+                "height": 80
+              },
+              "position": {
+                "x": 352,
+                "y": 45
+              },
+              "angle": 0,
+              "id": "688d0bfc-ef5a-4032-ab38-e3218a399bab",
+              "z": 2,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Special Offers and\nCoupons"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "688d0bfc-ef5a-4032-ab38-e3218a399bab"
+              },
+              "target": {
+                "id": "c9838c17-b4d4-4160-84bf-f6216dec6d14"
+              },
+              "vertices": [
+                {
+                  "x": 271,
+                  "y": 110
+                },
+                {
+                  "x": 230,
+                  "y": 118
+                }
+              ],
+              "id": "d3dfbcd5-fc67-41a3-a15a-18bcdc97803e",
+              "labels": [
+                {
+                  "position": {
+                    "distance": 0.6330018774158312,
+                    "offset": -30.031846558574692
+                  },
+                  "attrs": {
+                    "text": {
+                      "text": "Details About Special\noffers and Discount",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 4,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            }
+          ]
+        },
+        "size": {
+          "height": 590,
+          "width": 790
+        }
+      }
+    ]
+  }
+}
